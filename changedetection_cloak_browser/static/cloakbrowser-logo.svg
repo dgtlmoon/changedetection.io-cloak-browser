@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Browser window -->
+  <rect x="2" y="5" width="28" height="22" rx="3" ry="3" fill="#1a1a2e" stroke="#6c63ff" stroke-width="1.5"/>
+  <!-- Title bar -->
+  <rect x="2" y="5" width="28" height="7" rx="3" ry="3" fill="#6c63ff"/>
+  <rect x="2" y="9" width="28" height="3" fill="#6c63ff"/>
+  <!-- Window controls -->
+  <circle cx="7" cy="8.5" r="1.5" fill="#ff6b6b"/>
+  <circle cx="12" cy="8.5" r="1.5" fill="#ffd93d"/>
+  <!-- Ghost / cloak mask in browser body -->
+  <ellipse cx="16" cy="19" rx="7" ry="6" fill="#6c63ff" opacity="0.85"/>
+  <rect x="9" y="19" width="14" height="4" fill="#6c63ff" opacity="0.85"/>
+  <!-- Ghost feet -->
+  <path d="M9 23 Q10.5 25 12 23 Q13.5 25 15 23 Q16.5 25 18 23 Q19.5 25 21 23 L23 23 L23 19 L9 19 Z" fill="#6c63ff" opacity="0.85"/>
+  <!-- Ghost eyes -->
+  <circle cx="13" cy="18" r="1.8" fill="#1a1a2e"/>
+  <circle cx="19" cy="18" r="1.8" fill="#1a1a2e"/>
+  <circle cx="13.5" cy="17.5" r="0.7" fill="white"/>
+  <circle cx="19.5" cy="17.5" r="0.7" fill="white"/>
+</svg>

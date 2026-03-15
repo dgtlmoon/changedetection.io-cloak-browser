@@ -1,0 +1,71 @@
+name: Build, Test, and Publish Python 📦
+
+on: push
+
+jobs:
+  build-and-inspect:
+    name: Build and inspect Python package
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Extract and update version from tag
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/}
+        # Strip 'v' prefix if present (handles both v0.0.1 and 0.0.1)
+        VERSION=${VERSION#v}
+        echo "Building version: $VERSION"
+
+        # Update version in setup.py
+        sed -i "s/version='[^']*'/version='$VERSION'/" setup.py
+        echo "Updated setup.py with version $VERSION"
+        grep "version=" setup.py
+
+    - uses: hynek/build-and-inspect-python-package@v2
+
+
+  validate-semver:
+    name: Validate semantic version
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+    - build-and-inspect
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Extract version from tag
+      id: get_version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/}
+        VERSION=${VERSION#v}
+        echo "Validating version: $VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Validate semantic version
+      uses: matt-usurp/validate-semver@v2
+      with:
+        version: ${{ steps.get_version.outputs.version }}
+
+
+  publish-to-pypi:
+    name: >-
+      Publish Python 🐍 distribution 📦 to PyPI
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+    - build-and-inspect
+    - validate-semver
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://pypi.org/p/changedetection.io-cloak-browser
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: Packages
+        path: dist/
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
