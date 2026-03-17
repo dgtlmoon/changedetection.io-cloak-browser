@@ -18,6 +18,8 @@ Stealth browser fetcher plugin for [changedetection.io](https://github.com/dgtlm
 
 ***NOTE: - The biggest red-flag is still your IP address "quality", always use a high quality 'residential IP address' through a SOCKS style proxy - When you sign up using https://brightdata.grsm.io/n0r16zf7eivq BrightData will match any first deposit up to $150 .***
 
+***Cloak Browser works by downloading a pre-compiled binary chrome-browser from CloakHQ, remember, you are running a black-box piece of software that you do not know what's inside of it.***
+
 ## Quick Start
 
 ### 1. Install the plugin
