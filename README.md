@@ -16,6 +16,8 @@ Stealth browser fetcher plugin for [changedetection.io](https://github.com/dgtlm
 - Python 3.10+
 - ~200 MB disk space for the CloakBrowser Chromium binary (downloaded automatically on first run)
 
+***NOTE: - The biggest red-flag is still your IP address "quality", always use a high quality 'residential IP address' through a SOCKS style proxy - When you sign up using https://brightdata.grsm.io/n0r16zf7eivq BrightData will match any first deposit up to $150 .***
+
 ## Quick Start
 
 ### 1. Install the plugin
