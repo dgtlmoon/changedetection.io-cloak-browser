@@ -49,7 +49,7 @@ def register_content_fetcher():
     from changedetectionio.content_fetchers.playwright import capture_full_page_async
 
     class fetcher(Fetcher):
-        fetcher_description = "CloakBrowser - Stealth Chromium (anti-bot bypass)"
+        fetcher_description = "CloakBrowser - Stealth Chromium"
 
         # CloakBrowser pages are full Playwright pages — all features work unchanged
         supports_browser_steps = True
@@ -94,7 +94,7 @@ def register_content_fetcher():
                 'group': 'plugin',
                 'filename': 'cloakbrowser-logo.svg',
                 'alt': 'Using CloakBrowser (stealth)',
-                'title': 'CloakBrowser — Stealth Chromium with anti-bot bypass',
+                'title': 'CloakBrowser — Stealth Chromium',
             }
 
         @classmethod
