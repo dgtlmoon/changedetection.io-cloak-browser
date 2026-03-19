@@ -46,7 +46,9 @@ python -m cloakbrowser install
 In the changedetection.io UI, open any watch → **Edit** → **Fetch** tab → choose
 **"CloakBrowser - Stealth Chromium (anti-bot bypass)"** from the fetcher dropdown.
 
-### 3. (Optional) Configure via environment variables
+<img src="./docs/ui-config-web-page-change-detection.jpeg" alt="Cloak Stealth Browser option for web page change detection" title="Cloak Stealth Browser option for web page change detection"/>
+
+### 3. (Optional) Environment variables
 
 | Variable | Default | Description |
 |---|---|---|
@@ -91,6 +93,12 @@ The Python `cloakbrowser` package wraps the Playwright Python library but connec
 patched binary instead of stock Chromium. This means **the page API is 100% identical to
 Playwright** — browser steps, screenshots, visual selectors, and JS execution all work
 unchanged.
+
+# Warnings!
+
+- A pre-built binary chrome will be downloaded from the CloakHQ/Cloak-browser source, this repository has no control
+over that file, please consider the implications of running unknown binaries! See https://github.com/CloakHQ/CloakBrowser
+- Other leakage such as WebRTC, timezone information, RTT triangulation etc can still reveal the browser type!
 
 ### Detection bypass results
 
@@ -153,3 +161,5 @@ MIT License — see [LICENSE](LICENSE).
 
 CloakBrowser binary: free-to-use, no redistribution. See
 [CloakBrowser BINARY-LICENSE](https://github.com/CloakHQ/CloakBrowser/blob/main/BINARY-LICENSE.md).
+
+By using this software you agree to both the MIT LICENCE and the Cloak Browser licence(s).
