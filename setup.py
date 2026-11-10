@@ -22,7 +22,7 @@ setup(
         'changedetection_cloak_browser': ['static/*'],
     },
     install_requires=[
-        'changedetection.io>=0.54.6',
+        'changedetection.io>=0.71.1',
         'cloakbrowser>=0.3.0',
         'playwright>=1.40.0',
     ],

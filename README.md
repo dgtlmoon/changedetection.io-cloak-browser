@@ -12,7 +12,7 @@ Stealth browser fetcher plugin for [changedetection.io](https://github.com/dgtlm
 
 ## Requirements
 
-- changedetection.io >= 0.54.5
+- changedetection.io >= 0.71.1
 - Python 3.10+
 - ~200 MB disk space for the CloakBrowser Chromium binary (downloaded automatically on first run)
 
@@ -43,8 +43,14 @@ python -m cloakbrowser install
 
 ### 2. Select CloakBrowser for a watch
 
-In the changedetection.io UI, open any watch → **Edit** → **Fetch** tab → choose
-**"CloakBrowser - Stealth Chromium (anti-bot bypass)"** from the fetcher dropdown.
+In the changedetection.io UI, open any watch → **Edit** → **Request** tab → choose
+**"CloakBrowser - Stealth Chromium"** in the **Browser** list. To use it for every watch, make it
+the default under **Browsers & Proxies**.
+
+CloakBrowser is a browser like the others there, so you can save your own variations of it
+(**Browsers & Proxies** → CloakBrowser → **Add variation**) with a screen size, an emulated phone
+or tablet, a language, a timezone, blocked asset types - and CloakBrowser's own **Human-like
+behaviour** setting (On / Off / default), then pick a variation per watch or per group.
 
 <img src="./docs/ui-config-web-page-change-detection.jpeg" alt="Cloak Stealth Browser option for web page change detection" title="Cloak Stealth Browser option for web page change detection"/>
 
@@ -52,7 +58,7 @@ In the changedetection.io UI, open any watch → **Edit** → **Fetch** tab → 
 
 | Variable | Default | Description |
 |---|---|---|
-| `CLOAKBROWSER_HUMANIZE` | `true` | Enable human-like mouse/keyboard/scroll behaviour |
+| `CLOAKBROWSER_HUMANIZE` | `true` | Human-like mouse/keyboard/scroll behaviour for browsers that don't set it themselves (each CloakBrowser variation can turn it on or off) |
 | `playwright_proxy_server` | *(none)* | Proxy URL, e.g. `http://proxy:8080` |
 | `playwright_proxy_username` | *(none)* | Proxy username |
 | `playwright_proxy_password` | *(none)* | Proxy password |
@@ -93,6 +99,11 @@ The Python `cloakbrowser` package wraps the Playwright Python library but connec
 patched binary instead of stock Chromium. This means **the page API is 100% identical to
 Playwright** — browser steps, screenshots, visual selectors, and JS execution all work
 unchanged.
+
+Because of that, this plugin contains no fetching code of its own: it subclasses
+changedetection.io's Playwright fetcher and only replaces how the browser is obtained (it launches
+CloakBrowser instead of connecting to a remote Chrome). Everything else is changedetection.io's
+own, so the plugin follows core's fixes and features without being updated for them.
 
 # Warnings!
 
@@ -137,6 +148,17 @@ print([name for name, _ in plugin_manager.list_name_plugin()])
 # Should include: cloak_browser
 ```
 
+**Browser Steps tab does nothing?**
+Needs changedetection.io >= 0.71.1. Older versions only loaded the Browser Steps UI when
+`PLAYWRIGHT_DRIVER_URL` was set, even though CloakBrowser doesn't use it.
+
+**Chromium won't start in Docker (missing shared libraries)?**
+The stock changedetection.io image doesn't include the system libraries a local Chromium needs
+(`libnss3`, `libgbm1`, `libatk-bridge2.0-0`, `libxkbcommon0`, fonts and so on). Build an image on
+top of it that installs them, see
+[issue #1](https://github.com/dgtlmoon/changedetection.io-cloak-browser/issues/1) for a list that
+is reported to work.
+
 **Binary not downloaded?**
 ```bash
 python -m cloakbrowser install
@@ -147,7 +169,7 @@ python -m cloakbrowser info
 ```python
 from changedetectionio.content_fetchers import available_fetchers
 print(available_fetchers())
-# Should include: ('html_cloakbrowser', 'CloakBrowser - Stealth Chromium (anti-bot bypass)')
+# Should include: ('html_cloakbrowser', 'CloakBrowser - Stealth Chromium')
 ```
 
 **Check for CloakBrowser updates:**
